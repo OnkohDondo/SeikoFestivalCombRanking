@@ -1,10 +1,21 @@
 package jp.gr.java_conf.onkohdondo.seikofesta;
 
+import java.util.ArrayList;
+
 public class MainProgram {
 
+	private ArrayList<Game> games;
+	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		new MainProgram();
 	}
-
+	
+	private MainProgram(){
+		load();
+	}
+	
+	
+	private void load(){
+		games=new ArrayList<Game>();
+	}
 }
