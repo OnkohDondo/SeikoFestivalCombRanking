@@ -98,9 +98,9 @@ public class Game {
 	 * 
 	 */
 	private class Record {
-		@SuppressWarnings("unused")
+		@SuppressWarnings("all")
 		public Person person;
-		@SuppressWarnings("unused")
+		@SuppressWarnings("all")
 		public int score;
 		
 		public Record(Person p,int s){

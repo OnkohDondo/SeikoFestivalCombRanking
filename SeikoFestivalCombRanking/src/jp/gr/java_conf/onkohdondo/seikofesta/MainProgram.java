@@ -9,6 +9,7 @@ import java.util.TimerTask;
 
 public class MainProgram extends TimerTask{
 
+	@SuppressWarnings("unused")
 	private ArrayList<Game> games;
 	private RankingFrame rankingFrame;
 	
