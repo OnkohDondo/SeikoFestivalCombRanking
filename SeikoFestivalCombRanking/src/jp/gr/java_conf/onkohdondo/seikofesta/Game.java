@@ -81,10 +81,10 @@ public class Game {
 	 * 該当するランキングデータが見つからなかった時にスローされる。<br>
 	 * この場合、その人はゲームを未プレイである。
 	 */
-	public int getHighestRecord(Person p){
+	public Record getHighestRecord(Person p){
 		for(Record data:record)
 			if(data.person.equals(p))
-				return data.score;
+				return data;
 		//該当する人が見当たらなかった場合、IllegalArgumentExceptionを
 		//スローする。
 		throw new IllegalArgumentException("Person not found");
@@ -93,15 +93,17 @@ public class Game {
 	/**
 	 * ゲームの記録を保持するクラス。<br>
 	 * 記録保持者、及びそのスコアを記録する。
+	 * ランキングアニメーションのため、表示されている情報なども記録される。
 	 * 
 	 * @author Onkoh Dondo
 	 * 
 	 */
-	private class Record {
-		@SuppressWarnings("all")
+	public class Record {
 		public Person person;
-		@SuppressWarnings("all")
 		public int score;
+		
+		public boolean playing;
+		public int displayedScore;
 		
 		public Record(Person p,int s){
 			person=p;
