@@ -104,10 +104,22 @@ public class Game {
 		
 		public boolean playing;
 		public int displayedScore;
+		public int displayedX;
+		public int toX;
+		public int speed;
 		
 		public Record(Person p,int s){
 			person=p;
 			score=s;
+		}
+		
+		public void move(){
+			if(displayedScore<score){
+				if(score-displayedScore<7)
+					displayedScore=score;
+				else
+					displayedScore+=7;
+			}
 		}
 	}
 }

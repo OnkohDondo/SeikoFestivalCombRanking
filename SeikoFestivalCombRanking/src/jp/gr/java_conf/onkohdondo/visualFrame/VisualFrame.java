@@ -1,10 +1,10 @@
 package jp.gr.java_conf.onkohdondo.visualFrame;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.HeadlessException;
+import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
 
@@ -18,6 +18,7 @@ public class VisualFrame extends JFrame {
 	
 	Drawable drawable;
 	boolean setupped;
+	public BufferStrategy bst;
 	
 	public VisualFrame(Drawable d) throws HeadlessException {
 		super();
