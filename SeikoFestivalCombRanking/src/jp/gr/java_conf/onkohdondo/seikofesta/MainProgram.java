@@ -1,16 +1,19 @@
 package jp.gr.java_conf.onkohdondo.seikofesta;
 
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.util.ArrayList;
+
 import processing.core.PApplet;
 
 public class MainProgram extends PApplet{
 	private static final long serialVersionUID = 
 			5172172264712487071L;
-	public static final int RECORD_HEIGHT=60;/*
+	public static final int RECORD_HEIGHT=60;
 	private ArrayList<Game> games;
-	private VisualFrame rankingFrame;
 	
 	private int mode;
-	private int step;*/
+	private int step;
 	
 	public static void main(String[] passedArgs) {
 		String[] appletArgs = new String[] 
@@ -23,27 +26,22 @@ public class MainProgram extends PApplet{
 	}
 	
 	public void setup(){
-		size(400,400);
-	}
-	public MainProgram(){/*
 		load();
-		rankingFrame=new VisualFrame(this);
-		rankingFrame.setUndecorated(true);
+		frame.setUndecorated(true);
 		GraphicsDevice device =
 				GraphicsEnvironment.getLocalGraphicsEnvironment().
 				getDefaultScreenDevice();
-		device.setFullScreenWindow(rankingFrame);
-		rankingFrame.setVisible(true);
+		device.setFullScreenWindow(frame);
+		frame.setVisible(true);
 		mode=0;
 		step=0;
-//		rankingFrame.setIgnoreRepaint(true);
-//		rankingFrame.createBufferStrategy(2);
-//		rankingFrame.bst=rankingFrame.getBufferStrategy();
-*/
-	}
+		
+		size(400,400);
+		color(0);
+		background(255);
+	}	
 	
-	
-/*
+
 	private void load(){
 		games=new ArrayList<Game>();
 		games.add(new Game("おもしろゲーム１"));
@@ -60,8 +58,39 @@ public class MainProgram extends PApplet{
 		g.addRecord(p, 200);
 		g.addRecord(p, 100);
 	}
-*/
-	
+
+	public void draw(){
+//		Dimension size = rankingFrame.getSize();
+//		Image back = rankingFrame.
+//				createImage(size.width, size.height);
+//		Graphics2D g = (Graphics2D)back.getGraphics();
+		Game game=games.get(mode);
+			
+			//背景
+			rect(0, 0, width,height);
+			
+			//ゲームタイトル
+			textFont(createFont("ＭＳ　明朝", 60));
+			text(game.getGameName(), 
+					width/2-textWidth(game.getGameName())/2, 100);
+			
+			//各ランキングデータ表示
+			
+			{
+				int i;
+				Game.Record r;
+				for(i=0,r=game.getRecord().get(i);
+						i<game.getRecord().size();i++){
+					int drawY=
+						120+(r.playing?r.displayedX:i*RECORD_HEIGHT);
+					color(128);
+					rect(30,drawY, width-60, 50);
+					color(0);
+					textSize(30);
+//					g.drawString(i+1+"", 40,drawY+RECORD_HEIGHT-30);
+			}}	
+//			graphics.drawImage(back,0,0,rankingFrame);
+	}
 /*
 	@Override
 	public void run() {
@@ -81,52 +110,18 @@ public class MainProgram extends PApplet{
 	}
 */
 /*
-	@Override
-	public void setup(Graphics2D g, int id) {
-		if(id==rankingFrame.FRAME_ID){
-			g.setColor(BLACK);
-			g.setBackground(WHITE);
-		}
-	}
 
 	@Override
 	public void draw(Graphics2D graphics, int id) {
-		if(id==rankingFrame.FRAME_ID){
-			Dimension size = rankingFrame.getSize();
-			Image back = rankingFrame.
-					createImage(size.width, size.height);
-			Graphics2D g = (Graphics2D)back.getGraphics();
-			Game game=games.get(mode);
-			
-			//背景
-			g.clearRect(0, 0, rankingFrame.getWidth(),
-					rankingFrame.getHeight());
-			
-			//ゲームタイトル
-			g.setFont(new Font("ＭＳ　明朝", 0, 60));
-			g.drawString(game.getGameName(), 
-					rankingFrame.getWidth()/2-
-					g.getFontMetrics().stringWidth(
-							game.getGameName())/2, 100);
-			
-			//各ランキングデータ表示
-			
-			{
-				int i;
-				Game.Record r;
-				for(i=0,r=game.getRecord().get(i);
-						i<game.getRecord().size();i++){
-					int drawY=
-						120+(r.playing?r.displayedX:i*RECORD_HEIGHT);
-					g.setColor(LIGHT_GRAY);
-					g.fillRect(30,drawY
-							, rankingFrame.getWidth()-60, 50);
-					g.setColor(BLACK);
-					g.setFont(new Font("ＭＳ　明朝", 0, 30));
-//					g.drawString(i+1+"", 40,drawY+RECORD_HEIGHT-30);
-			}}	
-			graphics.drawImage(back,0,0,rankingFrame);
-		}
+	}
+*/
+
+/*
+	public MainProgram(){
+//		rankingFrame.setIgnoreRepaint(true);
+//		rankingFrame.createBufferStrategy(2);
+//		rankingFrame.bst=rankingFrame.getBufferStrategy();
+
 	}
 */
 }
