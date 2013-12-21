@@ -1,6 +1,7 @@
 package jp.gr.java_conf.onkohdondo.seikofesta;
 
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 /**
  * ランキングを保持するゲームの情報。
@@ -68,12 +69,46 @@ public class Game {
 		this.record = record;
 	}
 	
+	/**
+	 * ゲームに新しい記録を追加する。
+	 * 記録は、recordのscoreで降順に並び替えられる。
+	 * playingは自動的にfalseとされる。
+	 * 
+	 * @param p　記録保持者
+	 * @param i　点数
+	 */
 	public void addRecord(Person p,int i){
-		record.add(new Record(p,i));
+		addRecord(p, i, true);
+	}
+	
+	
+	/**
+	 * ゲームに新しい記録を追加する。playingを明示的に指定する場合に呼び出す。
+	 * 記録は、recordのscoreで降順に並び替えられる。
+	 * 
+	 * @param p　記録保持者
+	 * @param i　点数
+	 * @param b playingに設定する値
+	 */
+	public void addRecord(Person p, int i, boolean b){
+		if(record.isEmpty()){
+			record.add(new Record(0,p,i,b));
+			return;
+		}
+		ListIterator<Record> li=record.listIterator();
+		do{
+			if(li.next().getScore()<i){
+				li.previous();
+				li.add(new Record(li.previousIndex()+1,p,i,b));
+				return;
+			}
+		}while(li.hasNext());
+		li.add(new Record(li.previousIndex()+1,p,i,b));
 	}
 	
 	/**
-	 * このゲームに含まれるランキングデータの中で、最も点数が高いスコアを取得する。
+	 * ある一人の人がこのゲームにおいて出した記録の中で、
+	 * 最も点数が高いスコアを取得する。
 	 * 
 	 * @param p 探しているパーソンデータ
 	 * @return パーソンデータに適合するスコアデータ
@@ -91,35 +126,20 @@ public class Game {
 	}
 	
 	/**
-	 * ゲームの記録を保持するクラス。<br>
-	 * 記録保持者、及びそのスコアを記録する。
-	 * ランキングアニメーションのため、表示されている情報なども記録される。
+	 * 人のIDに対応するPersoｎインスタンスを持った記録のうち、
+	 * プレイ中のものを返す。
 	 * 
-	 * @author Onkoh Dondo
-	 * 
+	 * @param id　パーソンデータのID
+	 * @return　記録データ
 	 */
-	public class Record {
-		public Person person;
-		public int score;
-		
-		public boolean playing;
-		public int displayedScore;
-		public int displayedX;
-		public int toX;
-		public int speed;
-		
-		public Record(Person p,int s){
-			person=p;
-			score=s;
-		}
-		
-		public void move(){
-			if(displayedScore<score){
-				if(score-displayedScore<7)
-					displayedScore=score;
-				else
-					displayedScore+=7;
+	public Record getPlayingRecordByPerson(int id){
+		for(Record data:record){
+			if(data.person.getSuicaid()==id){
+				if(data.isPlaying()){
+					return data;
+				}
 			}
 		}
+		return null;
 	}
 }
