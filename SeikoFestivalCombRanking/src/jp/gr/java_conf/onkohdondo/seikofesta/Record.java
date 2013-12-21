@@ -66,7 +66,7 @@ public class Record {
 		score=s;
 	}
 	
-	private static final int SCORE_PLUS_RATE=77;
+	private static final int SCORE_PLUS_RATE=7;
 	private static final float MOVE_RATE=0.02f;
 	
 	/**
@@ -74,26 +74,23 @@ public class Record {
 	 * 
 	 */
 	public void move(){
-		if(displayedScore<getScore()){
-			if(getScore()-displayedScore<SCORE_PLUS_RATE)
-				displayedScore=getScore();
-			else
-				displayedScore+=SCORE_PLUS_RATE;
-		}
-//		System.out.println(getIndex() + " : " + displayedRank);
 		if(displayedRank<getIndex()){
 //			System.out.println(getIndex()+": moved down");
 			if(getIndex()-displayedRank<MOVE_RATE)
 				displayedRank=getIndex();
 			else
 				displayedRank+=MOVE_RATE;
-		}
-		if(displayedRank>getIndex()){
+		}else if(displayedRank>getIndex()){
 //			System.out.println(getIndex()+": moved up");
 			if(displayedRank-getIndex()<MOVE_RATE)
 				displayedRank=getIndex();
 			else
 				displayedRank-=MOVE_RATE;
+		}else if(displayedScore<getScore()){
+			if(getScore()-displayedScore<SCORE_PLUS_RATE)
+				displayedScore=getScore();
+			else
+				displayedScore+=SCORE_PLUS_RATE;
 		}
 	}
 	

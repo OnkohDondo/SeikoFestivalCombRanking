@@ -75,7 +75,7 @@ public class MainProgram extends PApplet{
 		
 		//各ランキングデータ表示
 		noStroke();
-		for(int i=0; i<game.getRecord().size();i++){
+		for(int i=game.getRecord().size()-1; i>=0;i--){
 			Record r=game.getRecord().get(i);
 //			System.out.println(i+": "+r.getIndex()+"(Displayed: "
 //					+r.displayedRank+")		");

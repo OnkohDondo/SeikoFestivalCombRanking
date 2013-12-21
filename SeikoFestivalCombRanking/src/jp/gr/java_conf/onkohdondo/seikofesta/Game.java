@@ -158,6 +158,8 @@ public class Game {
 		addRecord(r.person, r.getScore());
 		getPlayingRecordByPerson(r.person.getSuicaid()).
 				displayedRank=r.getIndex();
+		getPlayingRecordByPerson(r.person.getSuicaid()).
+				displayedScore=r.displayedScore;
 //		System.out.println(record);
 		for(int i=0;i<record.size();i++){
 			record.get(i).setIndex(i);
