@@ -22,7 +22,7 @@ public class Record {
 	 */
 	private int score;
 	
-	private int rank;
+	private int index;
 	/**
 	 * 記録が、プレイ中の経過記録に対するものであるかどうか。<br>
 	 * trueのものはfalseにできるが、falseのものをtrueにすることはできない。
@@ -33,6 +33,7 @@ public class Record {
 	private boolean playing;
 	public int displayedScore;
 	public float displayedRank;
+	@Deprecated
 	public int speed;
 
 	
@@ -58,12 +59,15 @@ public class Record {
 	 * @param b　playing
 	 */
 	protected Record(int r, Person p, int s, boolean b){
-		rank=r;
-		if(b) displayedRank=r;
+		index=r;
+		displayedRank=r;
 		playing=b;
 		person=p;
 		score=s;
 	}
+	
+	private static final int SCORE_PLUS_RATE=77;
+	private static final float MOVE_RATE=0.02f;
 	
 	/**
 	 * playingがtrueであるとき、アニメーションを動かすために使用される。
@@ -71,10 +75,25 @@ public class Record {
 	 */
 	public void move(){
 		if(displayedScore<getScore()){
-			if(getScore()-displayedScore<77)
+			if(getScore()-displayedScore<SCORE_PLUS_RATE)
 				displayedScore=getScore();
 			else
-				displayedScore+=77;
+				displayedScore+=SCORE_PLUS_RATE;
+		}
+//		System.out.println(getIndex() + " : " + displayedRank);
+		if(displayedRank<getIndex()){
+//			System.out.println(getIndex()+": moved down");
+			if(getIndex()-displayedRank<MOVE_RATE)
+				displayedRank=getIndex();
+			else
+				displayedRank+=MOVE_RATE;
+		}
+		if(displayedRank>getIndex()){
+//			System.out.println(getIndex()+": moved up");
+			if(displayedRank-getIndex()<MOVE_RATE)
+				displayedRank=getIndex();
+			else
+				displayedRank-=MOVE_RATE;
 		}
 	}
 	
@@ -120,11 +139,11 @@ public class Record {
 		if(playing) this.playing =false;
 	}
 	
-	public int getRank() {
-		return rank;
+	public int getIndex() {
+		return index;
 	}
 	
-	private void setRank(int rank) {
-		this.rank = rank;
+	public void setIndex(int rank) {
+		this.index = rank;
 	}
 }

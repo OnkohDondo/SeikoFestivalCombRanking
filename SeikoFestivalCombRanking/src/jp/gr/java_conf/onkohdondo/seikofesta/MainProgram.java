@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.swing.plaf.SliderUI;
-
 import processing.core.PApplet;
 
 public class MainProgram extends PApplet{
@@ -57,8 +55,7 @@ public class MainProgram extends PApplet{
 		if(mode<games.size()){
 			Game g=games.get(mode);
 			for(Record r:g.getRecord())
-				if(r.isPlaying())
-					r.move();
+				r.move();
 		}
 		step++;
 		if(step>=STEP_MAX){
@@ -80,24 +77,26 @@ public class MainProgram extends PApplet{
 		noStroke();
 		for(int i=0; i<game.getRecord().size();i++){
 			Record r=game.getRecord().get(i);
-			int drawY=120+(int)(r.isPlaying()?
-						r.displayedRank:i)*(RECORD_HEIGHT+10);
+//			System.out.println(i+": "+r.getIndex()+"(Displayed: "
+//					+r.displayedRank+")		");
+			int drawY=120+(int)(r.displayedRank*(RECORD_HEIGHT+10));
 			fill(208);
 			rect(LEFT_SPACE,drawY, width-LEFT_SPACE-RIGHT_SPACE,
 					RECORD_HEIGHT);
 			fill(0);
 			textSize(30);
 			textAlign(LEFT,CENTER);
-			text(i+1+"", 40,drawY+RECORD_HEIGHT/2);
+			text((int)r.displayedRank+1+"",
+					40,drawY+RECORD_HEIGHT/2);
 			text(r.person.getName(),120,drawY+RECORD_HEIGHT/2);
 			text(r.isPlaying()?r.displayedScore:r.getScore(),
 					600, drawY+RECORD_HEIGHT/2);
-			System.out.println(r.getScore());
+//			System.out.println(r.getScore());
 			
-			stroke(255,0,0);
-			line(40,drawY+RECORD_HEIGHT/2,
-					width-40,drawY+RECORD_HEIGHT/2);
-			noStroke();
+//			stroke(255,0,0);
+//			line(40,drawY+RECORD_HEIGHT/2,
+//					width-40,drawY+RECORD_HEIGHT/2);
+//			noStroke();
 		}
 		
 		//エフェクト
@@ -132,16 +131,22 @@ public class MainProgram extends PApplet{
 
 		g.addRecord(new Person(1,"強者"), 0);
 		new Timer().schedule(new AddData(),12000);
-		new Timer().schedule(new AddData2(),16000);
+		new Timer().schedule(new AddData2(),18000);
 	}
 	public class AddData extends TimerTask{
 		public void run(){
-			games.get(0).getPlayingRecordByPerson(1).setScore(10000);
+			Game g=games.get(0);
+			g.setScore(g.getPlayingRecordByPerson(1).getIndex(),
+					700);
 		}
 	}
 	public class AddData2 extends TimerTask{
 		public void run(){
-			games.get(0).getPlayingRecordByPerson(1).setScore(15000);
+			Game g=games.get(0);
+//			System.out.println(g.getPlayingRecordByPerson(1).
+//					getIndex());
+			g.setScore(g.getPlayingRecordByPerson(1).getIndex(),
+					1500);
 		}
 	}
 }

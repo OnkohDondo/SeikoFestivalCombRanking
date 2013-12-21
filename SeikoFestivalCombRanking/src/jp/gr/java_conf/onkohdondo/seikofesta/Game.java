@@ -142,4 +142,27 @@ public class Game {
 		}
 		return null;
 	}
+	
+	/**
+	 * 項目のインデックスを指定して、リストのスコアを変更する。
+	 * 順位は自動的に並べ替えられる。
+	 */
+	public void setScore(int index, int score){
+		record.get(index).setScore(score);
+		ListIterator<Record> li=record.listIterator();
+		Record r=null;
+		while(li.nextIndex()!=index)
+			r=li.next();
+		r=li.next();
+		li.remove();
+		addRecord(r.person, r.getScore());
+		getPlayingRecordByPerson(r.person.getSuicaid()).
+				displayedRank=r.getIndex();
+//		System.out.println(record);
+		for(int i=0;i<record.size();i++){
+			record.get(i).setIndex(i);
+//			System.out.print(record.get(i)+" ");
+//			System.out.println(record.get(i).getIndex());
+		}
+	}
 }
