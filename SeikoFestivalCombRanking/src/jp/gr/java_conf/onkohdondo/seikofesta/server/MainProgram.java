@@ -21,7 +21,8 @@ public class MainProgram extends PApplet{
 	
 	public static void main(String[] passedArgs) {
 		String[] appletArgs = new String[] 
-			{ "jp.gr.java_conf.onkohdondo.seikofesta.MainProgram"
+			{ "jp.gr.java_conf.onkohdondo.seikofesta.server."
+					+ "MainProgram"
 //				,ARGS_FULL_SCREEN
 				};
 		if (passedArgs != null) {
