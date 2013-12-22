@@ -1,4 +1,4 @@
-package jp.gr.java_conf.onkohdondo.seikofesta;
+package jp.gr.java_conf.onkohdondo.seikofesta.server;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -24,6 +24,8 @@ public class Game {
 	 * @see Game#getRecord()
 	 */
 	private ArrayList<Record> record;
+	
+	public int dight=6;
 	
 	/**
 	 * ゲームクラスのコンストラクタ。<br>

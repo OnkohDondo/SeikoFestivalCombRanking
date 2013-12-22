@@ -1,4 +1,4 @@
-package jp.gr.java_conf.onkohdondo.seikofesta;
+package jp.gr.java_conf.onkohdondo.seikofesta.server;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -15,7 +15,7 @@ public class MainProgram extends PApplet{
 	private int mode;
 	private int step;
 	
-	private static final int STEP_MAX=256;
+	private static final int STEP_MAX=512;
 	private static final int LEFT_SPACE=40;
 	private static final int RIGHT_SPACE=LEFT_SPACE;
 	
@@ -52,16 +52,24 @@ public class MainProgram extends PApplet{
 		Game game=games.get(mode);
 		
 		//アニメーションステップの加算
-		if(mode<games.size()){
+		boolean b=false;//ランキング変動が１つ以上あるかどうか
+		if(mode<games.size()){//ランキング表示中のみ行う。（表示外だったらエラー）
 			Game g=games.get(mode);
-			for(Record r:g.getRecord())
+			if(32<step && step<STEP_MAX-32)
+			for(Record r:g.getRecord()){
 				r.move();
+				if(r.getScore()!=r.displayedScore) b=true;
+			}
 		}
-		step++;
+		if(!b) step++; else step=STEP_MAX/2;
 		if(step>=STEP_MAX){
 			step=0;
 			mode++;
 			if(mode>=games.size()) mode=0;
+			//表示モードが変わった時、displayedScoreを全部0にする！
+			for(Record r:games.get(mode).getRecord()){
+				r.displayedScore=0;
+			}
 		}
 			
 		//背景
@@ -89,7 +97,7 @@ public class MainProgram extends PApplet{
 			text((int)r.displayedRank+1+"",
 					40,drawY+RECORD_HEIGHT/2);
 			text(r.person.getName(),120,drawY+RECORD_HEIGHT/2);
-			text(r.isPlaying()?r.displayedScore:r.getScore(),
+			text(nf(r.displayedScore,game.dight),
 					600, drawY+RECORD_HEIGHT/2);
 //			System.out.println(r.getScore());
 			
@@ -116,22 +124,21 @@ public class MainProgram extends PApplet{
 	private void loadGameData(){
 		games=new ArrayList<Game>();
 		games.add(new Game("おもしろゲーム１"));
-//		games.add(new Game("おもしろゲーム２"));
+		games.add(new Game("おもしろゲーム２"));
 		Game g=games.get(0);
 		Person p=new Person(0, "TAMESHI");
-		g.addRecord(p,1000,false);
-		g.addRecord(p, 500,false);
-		g.addRecord(p, 200,false);
-		g.addRecord(p, 100,false);
-//		g=games.get(1);
-//		g.addRecord(p,1000);
-//		g.addRecord(p, 500);
-//		g.addRecord(p, 200);
-//		g.addRecord(p, 100);
-
+		g.addRecord(p,1000);
+		g.addRecord(p, 500);
+		g.addRecord(p, 200);
+		g.addRecord(p, 100);
 		g.addRecord(new Person(1,"強者"), 0);
 		new Timer().schedule(new AddData(),12000);
-		new Timer().schedule(new AddData2(),18000);
+		new Timer().schedule(new AddData2(),25000);
+		g=games.get(1);
+		g.addRecord(p,1000);
+		g.addRecord(p, 500);
+		g.addRecord(p, 200);
+		g.addRecord(p, 100);
 	}
 	public class AddData extends TimerTask{
 		public void run(){

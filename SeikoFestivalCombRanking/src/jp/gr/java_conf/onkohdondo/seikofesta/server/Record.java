@@ -1,4 +1,4 @@
-package jp.gr.java_conf.onkohdondo.seikofesta;
+package jp.gr.java_conf.onkohdondo.seikofesta.server;
 /**
  * ゲームの記録を保持するクラス。<br>
  * 記録保持者、及びそのスコアを記録する。
@@ -86,7 +86,8 @@ public class Record {
 				displayedRank=getIndex();
 			else
 				displayedRank-=MOVE_RATE;
-		}else if(displayedScore<getScore()){
+		}
+		if(!(displayedRank>getIndex()) && displayedScore<getScore()){
 			if(getScore()-displayedScore<SCORE_PLUS_RATE)
 				displayedScore=getScore();
 			else

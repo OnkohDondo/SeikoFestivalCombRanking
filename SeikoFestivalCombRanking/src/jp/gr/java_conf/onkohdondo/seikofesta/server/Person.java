@@ -1,4 +1,4 @@
-package jp.gr.java_conf.onkohdondo.seikofesta;
+package jp.gr.java_conf.onkohdondo.seikofesta.server;
 
 
 /**
