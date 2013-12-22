@@ -43,11 +43,9 @@ public class MainProgram extends TimerTask {
 		if(str.indexOf("name")!=-1){
 			if(!mainFrame.isVisible()) mainFrame.setVisible(true);
 		}
-		
 	}
 	
 	protected void openSettings(){
-//		System.out.println("管理者用ソフトを開きます・・・");
 	}
 
 	protected String getName() {
